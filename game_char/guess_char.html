@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>看字游戏</title>
+    <style>
+        .con {
+            margin: 0 auto;
+            padding: 10px 15px;
+            width: 300px;
+            border: 1px solid #ccc;
+        }
+
+        .cl::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .top-left {
+            float: left;
+        }
+
+        .top-right {
+            float: right;
+        }
+
+        .mid {
+            text-align: center;
+            height: 300px;
+            line-height: 300px;
+            font-size: 100px;
+        }
+
+        .botm span {
+            display: inline-block;
+            margin: 10px 2px 0;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 25px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .start-btn {
+            float: left;
+            margin-left: 50px;
+            padding: 5px;
+            background: lavenderblush;
+            color: lightcoral;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .start-btn:hover {
+            background: black;
+            border-radius: 10px;
+            color: #fff;
+            border: 1px solid lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <div class="top cl">
+            <div class="top-left">时间:<span>60</span>秒</div>
+            <div class="start-btn">开始游戏</div>
+            <div class="top-right">选中:<span>0</span></div>
+        </div>
+        <div class="mid">
+            黑
+        </div>
+        <div class="game_ruguler">
+            根据上面字体的颜色，在下面选出相应的颜色名称,选错时间减5秒
+        </div>
+        <div class="botm">
+            <span>红</span>
+            <span>绿</span>
+            <span>蓝</span>
+            <span>黑</span>
+            <span>黄</span>
+        </div>
+    </div>
+
+    <script>
+        //时间
+        var timeDiv = document.querySelector(".top-left span");
+        //选中结果项
+        var resultDiv = document.querySelector(".top-right span");
+        // 内容项
+        var midDiv = document.querySelector(".mid");
+        //选择项集合
+        var botmSpan = document.querySelectorAll(".botm span");
+        //开始按钮
+        var startBtn = document.querySelector(".start-btn");
+        //计数
+        var count = 0;
+        //定义颜色和汉字数组
+        var arrChar = ["黑", "红", "绿", "蓝", "黄"];
+        var arrColor = ["black", "red", "green", "blue", "yellow"];
+
+        //产生5个不重复的随机位置0~5的数组
+        function intArrayRandom(min, max) {
+            var arr = [];
+            // 下标从0开始 长度为5就不需要执行
+            while (arr.length < 5) {
+                var rdm = Math.round(Math.random() * (max - min) + min);
+                if (arr.indexOf(rdm) == -1) {
+                    arr.push(rdm);
+                }
+            }
+            return arr;
+        }
+        //随机颜色函数
+        function randomColor(eleArr, ele, arr) {
+            var arrR = intArrayRandom(0, 4);
+            for (var i = 0; i < arrR.length; i++) {
+                eleArr[i].style.color = arr[arrR[i]];
+            }
+            ele.style.color = arr[Math.round(Math.random() * 4)]
+            console.log("1");
+        }
+        //随机字函数
+        function randomFont(eleArr, ele, arr) {
+            var arrR = intArrayRandom(0, 4);
+            for (var i = 0; i < arrR.length; i++) {
+                eleArr[i].innerHTML = arr[arrR[i]];
+            }
+            ele.innerHTML = arr[Math.round(Math.random() * 4)];
+            console.log("2");
+        }
+        // 开始函数
+        function gameStart(arguments) {
+            //定义开关按钮
+            var switch_btn = true;
+            var timer = null;
+            //定义时间
+            var second = 60;
+            if (switch_btn) {
+                //点击事件
+                for (var i = 0; i < botmSpan.length; i++) {
+                    botmSpan[i].onclick = function () {
+                        var bigColor = midDiv.style.color;
+                        // 查找数组对应相等则选对
+                        if (arrChar.indexOf(this.innerHTML) == arrColor.indexOf(bigColor)) {
+                            // alert("你选对了");
+                            count++;
+                            resultDiv.innerHTML = count;
+                            randomColor(botmSpan, midDiv, arrColor);
+                            randomFont(botmSpan, midDiv, arrChar);
+                        } else {
+                            // alert("你选错了");
+                            second-=5;
+                            randomColor(botmSpan, midDiv, arrColor);
+                            randomFont(botmSpan, midDiv, arrChar);
+                        }
+                    }
+                }
+            }
+            timer = setInterval(function () {
+                second--;
+                timeDiv.innerHTML = second;
+                if (second == 0) {
+                    switch_btn = false;
+                     timeDiv.innerHTML = "60";
+                    clearInterval(timer);
+                    alert("游戏结束！你的分数：" + resultDiv.innerHTML + "分");
+                }
+            }, 1000);
+        }
+        //初始化
+        randomColor(botmSpan, midDiv, arrColor);
+        randomFont(botmSpan, midDiv, arrChar);
+        //点击开始游戏按钮游戏开始函数调用；
+        startBtn.onclick = function () {
+            gameStart();
+        }
+    </script>
+</body>
+
+</html>

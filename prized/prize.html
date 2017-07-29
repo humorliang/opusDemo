@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>刮刮乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .fix-wrap {
+            position: fixed;
+            background: url(img/bg.png) no-repeat 0px 0px;
+            left: 200px;
+            top: 0;
+            width: 820px;
+            height: 518px;
+        }
+
+        .wrap {
+            position: relative;
+            margin: 350px 280px;
+            width: 293px;
+            height: 100px;
+            border: 2px solid #754;
+            cursor: pointer;
+        }
+
+        .img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 293px;
+            height: 100px;
+            line-height: 100px;
+            font-size: 25px;
+            background: #fff;
+            color: red;
+            text-align: center;
+        }
+
+        #myCanvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fix-wrap">
+        <div class="wrap">
+            <div class="img">营养快线一瓶</div>
+            <canvas id="myCanvas" width="293" height="100">您的浏览器不支持canvas</canvas>
+        </div>
+    </div>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext('2d');
+
+        // 获取鼠标相对坐标
+        function mosPos(e) {
+            var x, y;
+            var e = e || window.event;
+            // 返回坐标对象 x:可视区域x坐标加上文档的水平滚动宽度
+            // y:可视区域y坐标加上文档的垂直滚动宽度
+
+            return {
+
+                x: e.clientX - canvas.getBoundingClientRect().left - document.body.scrollLeft - document.documentElement
+                    .scrollLeft,
+                y: e.clientY - canvas.getBoundingClientRect().top - document.body.scrollTop - document.documentElement.scrollTop
+            }
+        }
+        //绘制蒙版
+        //开启绘制路径
+        ctx.beginPath();
+        ctx.fillStyle = '#ccc';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //鼠标按下开始绘制
+        canvas.onmousedown = function (e) {
+            // console.log("x:" + e.clientX + "Y:" + e.clientY);
+            canvas.onmousemove = function (event) {
+                // 获取鼠标位置
+                var mPos = mosPos(event);
+                // console.log("X:" + mPos.x + "Y:" + mPos.y);
+                // var x = event.clientX;
+                // var y = event.clientY;
+                //destination-out  原有内容中与新图形不重叠的部分会被保留。
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                // 圆心位置 半斤 开始的角度 结束的角度
+                ctx.arc(mPos.x, mPos.y, 10, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        canvas.onmouseup = function () {
+            canvas.onmousemove = function () {}
+        }
+    </script>
+</body>
+
+</html>

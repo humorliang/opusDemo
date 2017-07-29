@@ -1,0 +1,234 @@
+/*公共样式  */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #ccc;
+}
+
+.cl::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.wrap {
+    padding-top: 100px;
+}
+
+
+/*头部  */
+
+header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, .75);
+    box-shadow: 0 3px 3px #000;
+    z-index: 2;
+}
+
+header div img {
+    width: 15%;
+    margin: 10px 0;
+}
+
+header a {
+    margin: 0 50px;
+}
+
+header a:hover {
+    color: #fff;
+}
+
+
+/*轮播  */
+
+.con {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.slider {
+    position: relative;
+}
+
+.slider-top img {
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.slider-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0, 0, 0, .75);
+    width: 100%;
+}
+
+.slider-pag {
+    text-align: center;
+}
+
+.slider-pag span {
+    display: inline-block;
+    margin: 0 5px;
+    width: 6px;
+    height: 6px;
+    background: #ccc;
+    border-radius: 5px;
+}
+
+.slider-pag span:hover {
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.contacts {
+    margin: 20px 0;
+    padding: 20px 0;
+    text-indent: 2em;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}
+
+.contacts2 img {
+    width: 63px;
+}
+
+
+/*瀑布流  */
+
+.water-flow div {
+    box-sizing: border-box;
+    float: left;
+}
+
+.water-flow .item {
+    position: relative;
+    width: 30%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 2px 2px 2px #CCC;
+}
+
+.item:nth-child(3n+2) {
+    margin: 0 5%;
+    margin-top: 20px;
+}
+
+@media screen and (max-width:900px) {
+    .con .water-flow .item {
+        width: 40%;
+        margin-left:5%; 
+        margin-right:5%; 
+    }
+    .con .item:nth-child(3n+2) {
+        /* margin: 0; */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+@media screen and (max-width:600px) {
+    .con .water-flow .item {
+        width: 90%;
+        margin-left:5%; 
+        margin-right:5%; 
+    }
+    .con .item:nth-child(3n+2) {
+        /* margin: 0; */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.water-flow .item img {
+    width: 100%;
+}
+
+.item .mask {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 23px);
+    color: #fff;
+    text-align: center;
+    background: rgba(0, 0, 0, .4);
+}
+
+.item:hover .mask {
+    display: block;
+}
+
+.item .mask h2 {
+    font-size: 30px;
+    margin: 30px 0;
+}
+
+.item h3 {
+    text-align: center;
+}
+
+footer {
+    background: rgb(224, 224, 224);
+}
+
+.footer-left {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 10px;
+    width: 50%;
+    text-align: right;
+}
+
+.footer-left img {
+    width: 30px;
+}
+
+.footer-rg {
+    display: inline-block;
+    vertical-align: top;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+}
+@media screen and (max-width:600px){
+    footer .footer-rg{
+        width: 100%;
+        text-align: center;
+    }
+    footer .footer-rg img{
+        width: 30%;
+    }
+    footer .footer-left{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.footer-rg img {
+    width: 45%;
+}
+
+.footer-rg p {
+    margin: 5px 0;
+}

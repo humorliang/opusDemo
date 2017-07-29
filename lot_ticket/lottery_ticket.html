@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>彩票</title>
+    <style>
+        div {
+            margin: 0 auto;
+            width: 580px;
+        }
+
+        div span {
+            display: inline-block;
+            vertical-align: top;
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+        }
+
+        .span1 {
+            background: blue;
+            margin: 0 5px;
+        }
+
+        .span2 {
+            background: red;
+            margin-left: 10px;
+        }
+
+        button {
+            vertical-align: top;
+            width: 100px;
+            height: 50px;
+            background: lightcyan;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        h1 {
+            text-align: center;
+            color: lightcoral;
+            text-shadow: 0px 2px 3px 3px blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>双色球等你来战</h1>
+    <div>
+        <!--1~33  -->
+        <span class="span1"></span>
+        <span class="span1"></span>
+        <span class="span1"></span>
+        <span class="span1"></span>
+        <span class="span1"></span>
+        <span class="span1"></span>
+        <!-- 1~16 -->
+        <span class="span2"></span>
+        <button>随机选注</button>
+    </div>
+
+    <script>
+        var oSpan1 = document.getElementsByClassName('span1');
+        var oSpan2 = document.getElementsByClassName('span2')[0];
+        var btn = document.getElementsByTagName('button')[0];
+        btn.onclick = function () {
+            var numArr = [];
+            var count = 0;
+            var rdm2 = Math.round(Math.random() * 15 + 1);
+            for (var i = 0;; i++) {
+                var rdm = Math.round(Math.random() * 32 + 1);
+                if (numArr.indexOf(rdm) == -1) {
+                    numArr.push(rdm);
+                    count++;
+                    if (count > 5) {
+                        break;
+                    }
+                }
+            }
+            //数组排序
+            numArr.sort(function (a, b) {
+                return a - b;
+            });
+            for (var i = 0; i <= oSpan1.length-1; i++) {
+                oSpan1[i].innerHTML = numArr[i];
+            }
+
+            oSpan2.innerHTML = rdm2;
+            // for (var i = 0; i < oSpan1.length; i++) {
+            //     oSpan1[i].innerHTML = numArr[i];
+            // }
+        }
+    </script>
+
+</body>
+
+</html>

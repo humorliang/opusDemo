@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>画板</title>
+    <style>
+        .cl::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .con {
+            margin: 0 auto;
+            width: 700px;
+            border: 1px solid #ccc;
+            cursor: pointer
+        }
+
+        .btn {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .btn div {
+            float: left;
+            margin: 10px;
+            width: 100px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            background: lavenderblush;
+            color: gray;
+            border: 1px solid palevioletred;
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <canvas id="myCan" width="700" height="500">您的浏览器不支持canvas</canvas>
+    </div>
+    <div class="btn cl">
+        <div class="btnRect">画矩形</div>
+        <div class="btnCirle">画圆形</div>
+        <div class="btnPen">涂鸦笔</div>
+        <div class="btnClear">清空</div>
+    </div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jcanvas.min.js"></script>
+    <script src="js/function.js"></script>
+    <script src="js/draw.js"></script>
+
+</body>
+
+</html>

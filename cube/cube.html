@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小魔方</title>
+    <style>
+        .con {
+            width: 150px;
+            margin: 200px auto 0;
+            perspective: 100000px;
+            transform-style: preserve-3d;
+        }
+
+        .fat {
+            position: relative;
+            transform-style: preserve-3d;
+            width: 150px;
+            height: 150px;
+            /* background: khaki; */
+            transform: rotateX(40deg) rotateY(-40deg);
+             animation: scale 14s linear infinite; 
+        }
+
+        @keyframes scale {
+            0% {
+                transform:rotateX(40deg) rotateY(-40deg) scale3d(.02, .02, .02);
+            }
+            50% {
+                transform:rotateX(340deg) rotateY(-340deg) scale3d(2, 2, 2);
+            }
+            100% {
+                transform:rotateX(40deg) rotateY(-40deg) scale3d(.02, .02, .02);
+            }
+        }
+
+        .fat div:nth-child(2n+1) {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 1px solid red;
+            box-shadow: 0px 0px 50px 2px yellow;
+           
+        }
+
+        .fat div:nth-child(2n) {
+            position: absolute;
+            left: 45%;
+            top: 45%;
+            width: 50px;
+            height: 50px;
+            border: 1px solid blue;
+            box-shadow: 0px 0px 20px 2px lightcoral;
+           
+        }
+
+        .son1 {
+            transform: translateZ(-100px);
+        }
+
+        .sson1 {
+            transform: translateZ(-25px);
+        }
+
+        .son2 {
+            transform: translateZ(100px);
+        }
+
+        .sson2 {
+            transform: translateZ(25px);
+        }
+
+        .son3 {
+            transform: translateX(100px) rotateY(-90deg);
+        }
+
+        .sson3 {
+            transform: translateX(25px) rotateY(-90deg);
+        }
+
+        .son4 {
+            transform: translateX(-100px) rotateY(90deg);
+        }
+
+        .sson4 {
+            transform: translateX(-25px) rotateY(90deg);
+        }
+
+        .son5 {
+            transform: translateY(100px) rotateX(90deg);
+        }
+
+        .sson5 {
+            transform: translateY(25px) rotateX(90deg);
+        }
+
+        .son6 {
+            transform: translateY(-100px) rotateX(-90deg);
+        }
+
+        .sson6 {
+            transform: translateY(-25px) rotateX(-90deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <div class="fat">
+            <div class="son1">
+            </div>
+            <div class="sson1"></div>
+            <div class="son2">
+            </div>
+            <div class="sson2"></div>
+            <div class="son3">
+            </div>
+            <div class="sson3"></div>
+            <div class="son4">
+            </div>
+            <div class="sson4"></div>
+            <div class="son5">
+            </div>
+            <div class="sson5"></div>
+            <div class="son6">
+            </div>
+            <div class="sson6"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
