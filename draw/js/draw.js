@@ -228,8 +228,9 @@ var canvasObj = {
         //获取绘制元素的上下文
         var cvs = document.getElementById("myCan");
         var context = cvs.getContext("2d");
-        // window.location.reload();
-        $(cvs).removeLayers();
+        //重加载
+        window.location.reload();
+        //$(cvs).removeLayers();
 
     }
     // drawPen: function () {
