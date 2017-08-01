@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>彩票</title>
     <style>
@@ -70,32 +71,36 @@
         var oSpan1 = document.getElementsByClassName('span1');
         var oSpan2 = document.getElementsByClassName('span2')[0];
         var btn = document.getElementsByTagName('button')[0];
+        var time=["timer1","timer2","timer3","timer4","timer5","timer6"];
         btn.onclick = function () {
             var numArr = [];
             var count = 0;
             var rdm2 = Math.round(Math.random() * 15 + 1);
-            for (var i = 0;; i++) {
+            while (numArr.length<6) {
                 var rdm = Math.round(Math.random() * 32 + 1);
                 if (numArr.indexOf(rdm) == -1) {
                     numArr.push(rdm);
-                    count++;
-                    if (count > 5) {
-                        break;
-                    }
                 }
             }
             //数组排序
             numArr.sort(function (a, b) {
                 return a - b;
             });
-            for (var i = 0; i <= oSpan1.length-1; i++) {
-                oSpan1[i].innerHTML = numArr[i];
-            }
 
-            oSpan2.innerHTML = rdm2;
-            // for (var i = 0; i < oSpan1.length; i++) {
-            //     oSpan1[i].innerHTML = numArr[i];
-            // }
+            function randomNumFlash(ele, time,arrNum,timerArr) {
+                timerArr = setInterval(function () {
+                    ele.innerHTML = parseInt(Math.random() * 20 + 5);
+                }, 105);
+                setTimeout(function () {
+                    ele.innerHTML=arrNum;
+                    clearInterval(timerArr);
+                }, time);
+            }
+            for (var i = 0; i <= oSpan1.length - 1; i++) {
+                randomNumFlash(oSpan1[i], 3000 * (i + 1),numArr[i],time[i]);
+            }
+            randomNumFlash(oSpan2, 20000,rdm2,time[5]);
+            // oSpan2.innerHTML = rdm2;
         }
     </script>
 
