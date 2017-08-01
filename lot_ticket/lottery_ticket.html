@@ -71,7 +71,7 @@
         var oSpan1 = document.getElementsByClassName('span1');
         var oSpan2 = document.getElementsByClassName('span2')[0];
         var btn = document.getElementsByTagName('button')[0];
-        var time=["timer1","timer2","timer3","timer4","timer5","timer6"];
+        var time=["timer1","timer2","timer3","timer4","timer5","timer6","timer7"];
         btn.onclick = function () {
             var numArr = [];
             var count = 0;
@@ -99,7 +99,7 @@
             for (var i = 0; i <= oSpan1.length - 1; i++) {
                 randomNumFlash(oSpan1[i], 3000 * (i + 1),numArr[i],time[i]);
             }
-            randomNumFlash(oSpan2, 20000,rdm2,time[5]);
+            randomNumFlash(oSpan2, 20000,rdm2,time[6]);
             // oSpan2.innerHTML = rdm2;
         }
     </script>
