@@ -9,3 +9,4 @@
 * [canvas画板](draw/drawBoard.html)
 * [3D魔方](cube/cube.html)
 * [彩票](lot_ticket/lottery_ticket.html)
+* [轮播图](sliderPic/slider.html);

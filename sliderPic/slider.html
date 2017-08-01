@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <style>
+        .cl::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .slider-con {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        ul {
+            position: absolute;
+            left: 0;
+            top: 0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 1500px;
+        }
+
+        li {
+            float: left;
+            width: 300px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            border: 1px solid lightblue;
+            background: lemonchiffon;
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .slider-page {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            text-align: center;
+        }
+
+        .slider-page span {
+            display: inline-block;
+            margin: 0 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: lightcoral;
+            cursor: pointer;
+        }
+
+        .slider-last {
+            position: absolute;
+            left: 0;
+            top: calc(50% - 20px);
+            width: 20px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+            background: rgba(10, 100, 210, .5);
+            cursor: pointer;
+        }
+
+        .slider-next {
+            position: absolute;
+            right: 0;
+            top: calc(50% - 20px);
+            width: 20px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+            background: rgba(10, 100, 210, .5);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-con">
+        <ul class="cl">
+            <li><img src="img/1.jpg" alt="美女1"></li>
+            <li style="background:#ccc;"><img src="img/2.jpg" alt="美女2"></li>
+            <li style="background:#369;"><img src="img/3.jpg" alt="美女3"></li>
+            <li style="background:#198;"><img src="img/4.jpg" alt="美女4"></li>
+            <li style="background:#238;"><img src="img/5.jpg" alt="美女5"></li>
+        </ul>
+        <div class="slider-page">
+            <span dataindex="0"></span>
+            <span dataindex="1"></span>
+            <span dataindex="2"></span>
+            <span dataindex="3"></span>
+            <span dataindex="4"></span>
+        </div>
+        <div class="slider-last">&lt;</div>
+        <div class="slider-next">&gt;</div>
+    </div>
+</body>
+<script>
+    var sliItem = document.querySelector(".slider-con ul");
+    var sliPage = document.querySelectorAll(".slider-page span");
+    var lastBtn = document.querySelector(".slider-last");
+    var nextBtn = document.querySelector(".slider-next");
+    var ItemPos = ["0px", "-300px", "-600px", "-900px", "-1200px"];
+    // 当前轮播图的位置索引
+    var index = 0;
+
+    var timer = setInterval("autoRun()", 3000);
+
+    function pageClick() {
+        for (var i = 0; i < sliPage.length; i++) {
+            //将变量i保存在每个段落变量对象上
+            //对象化
+            sliPage[i].i = i;
+            sliPage[i].onclick = function () {
+                clearInterval(timer);
+                //对象的访问
+                index2 = this.i;
+                //全局索引位置确立
+                index = this.i;
+                setBackgroundArr(sliPage, "lightcoral");
+                sliItem.style.transition = "0s";
+                sliItem.style.left = ItemPos[index2];
+                sliPage[index2].style.background = "blue";
+                timer = setInterval("autoRun()", 3000);
+            }
+        }
+    }
+
+    function setBackgroundArr(eleArr, value) {
+        for (var i = 0; i < eleArr.length; i++) {
+            eleArr[i].style.background = value;
+        }
+    }
+
+    function nextFn() {
+        clearInterval(timer);
+        if (index <= 4) {
+            sliItem.style.transition = "0s";
+            sliItem.style.left = ItemPos[index + 1];
+            setBackgroundArr(sliPage, "lightcoral");
+            sliPage[index + 1].style.background = "blue";
+            index++;
+        }
+        timer = setInterval("autoRun()", 3000);
+    }
+
+    function lastFn(arguments) {
+        clearInterval(timer);
+        if (index >= 1) {
+            sliItem.style.transition = "0s";
+            sliItem.style.left = ItemPos[index - 1];
+            setBackgroundArr(sliPage, "lightcoral");
+            sliPage[index - 1].style.background = "blue";
+            index--;
+        }
+        timer = setInterval("autoRun()", 3000);
+    }
+
+    function autoRun() {
+        if (index >= 0 && index < 4) {
+            index++;
+            sliItem.style.transition = "2s";
+            sliItem.style.left = ItemPos[index];
+            setBackgroundArr(sliPage, "lightcoral");
+            sliPage[index].style.background = "blue";
+        } else {
+            index = 0;
+            sliItem.style.transition = "0s";
+            sliItem.style.left = ItemPos[index];
+            setBackgroundArr(sliPage, "lightcoral");
+            sliPage[index].style.background = "blue";
+        }
+    }
+    // 函数初始化
+    pageClick();
+    lastBtn.onclick = function () {
+        lastFn();
+    }
+    nextBtn.onclick = function () {
+        nextFn();
+    }
+</script>
+
+</html>
