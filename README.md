@@ -5,6 +5,7 @@
 * [开关灯小游戏](on_off_light/turns.html)
 * [眼花缭乱游戏](game_char/game_char.html)
 * [时钟](time/index.html)
+* [时钟2](time2/clock.html)
 * [canvas画板](draw/drawBoard.html)
 * [3D魔方](cube/cube.html)
 * [彩票](lot_ticket/lottery_ticket.html)

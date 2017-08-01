@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>时钟</title>
+    <style>
+        .con {
+            position: relative;
+            margin: 0 auto;
+            width: 500px;
+            height: 700px;
+            background: url(1.png) no-repeat 0 0;
+        }
+
+        .click-con {
+            position: absolute;
+            left: 132px;
+            bottom: 112px;
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            border: 10px solid lightblue;
+            border-radius: 50%;
+        }
+
+        .click-con div {
+            position: absolute;
+            left: 0;
+            top: calc(50% - 10px);
+            height: 20px;
+            line-height: 20px;
+            width: 200px;
+        }
+
+        .click-con div span:first-child {
+            position: absolute;
+            left: 0;
+        }
+
+        .click-con div span:last-child {
+            position: absolute;
+            right: 0;
+        }
+
+        .inner-h {
+            display: block;
+            position: absolute;
+            left: 101px;
+            top: calc(50% - 3px);
+            width: 50px;
+            height: 6px;
+            background: lawngreen;
+            transform-origin: 0 center;
+            transform: rotate(-90deg);
+        }
+
+        .inner-m {
+            display: block;
+            position: absolute;
+            left: 101px;
+            top: calc(50% - 3px);
+            width: 70px;
+            height: 6px;
+            background: blueviolet;
+            transform-origin: 0 center;
+            transform: rotate(-90deg);
+        }
+
+        .inner-s {
+            display: block;
+            position: absolute;
+            left: 101px;
+            top: calc(50% - 3px);
+            width: 85px;
+            height: 6px;
+            background: lightcoral;
+            transform-origin: 0 center;
+            transform: rotate(-90deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <div class="click-con">
+            <div class="inner9-3">
+                <span>9</span>
+                <span>3</span>
+            </div>
+            <div class="inner10-4">
+                <span>10</span>
+                <span>4</span>
+            </div>
+            <div class="inner11-5">
+                <span>11</span>
+                <span>5</span>
+            </div>
+            <div class="inner6-12">
+                <span>12</span>
+                <span>6</span>
+            </div>
+            <div class="inner7-1">
+                <span>1</span>
+                <span>7</span>
+            </div>
+            <div class="inner8-2">
+                <span>2</span>
+                <span>8</span>
+            </div>
+            <span class="inner-h"></span>
+            <span class="inner-m"></span>
+            <span class="inner-s"></span>
+        </div>
+    </div>
+</body>
+<script>
+    var oDiv = document.querySelectorAll(".click-con div");
+    var hDiv = document.getElementsByClassName('inner-h')[0];
+    var mDiv = document.getElementsByClassName('inner-m')[0];
+    var sDiv = document.getElementsByClassName('inner-s')[0];
+    //时间初始化
+    var oDate = new Date();
+    var hourNum = oDate.getHours();
+    var minuteNum = oDate.getMinutes();
+    var secondNum = oDate.getSeconds();
+    hDiv.style.transform = "rotate(" + (-90 + (hourNum * 30) + minuteNum / 2) + "deg)";
+    mDiv.style.transform = "rotate(" + (-90 + (minuteNum * 6)) + "deg)";
+    sDiv.style.transform = "rotate(" + (-90 + (secondNum * 6)) + "deg)";
+    //时钟布局
+    for (var i = 0; i < oDiv.length; i++) {
+        oDiv[i].style.transform = "rotate(" + i * 30 + "deg)";
+        var oDivSpan = oDiv[i].querySelectorAll(".click-con div span");
+        for (var j = 0; j < oDivSpan.length; j++) {
+            oDivSpan[j].style.transform = "rotate(" + -(i * 30) + "deg)";
+        }
+    }
+
+    function runTime() {
+        //时间
+        oDate = new Date();
+        hourNum = oDate.getHours();
+        minuteNum = oDate.getMinutes();
+        secondNum = oDate.getSeconds();
+
+        function setHour() {
+            hDiv.style.transform = "rotate(" + (-90 + (hourNum * 30) + minuteNum / 2) + "deg)";
+        }
+
+        function setMinute() {
+            mDiv.style.transform = "rotate(" + (-90 + (minuteNum * 6)) + "deg)";
+        }
+
+        function setSecond() {
+            sDiv.style.transform = "rotate(" + (-90 + (secondNum * 6)) + "deg)";
+        }
+        setHour();
+        setMinute();
+        setSecond();
+    }
+    setInterval("runTime()", 1000);
+</script>
+
+</html>
