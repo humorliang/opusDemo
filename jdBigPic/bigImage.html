@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>放大镜效果</title>
+    <style>
+        /*放大镜/小图=大图框/大图 */
+        .con {
+            position: relative;
+            margin: 50px 0 0 100px;
+            width: 450px;
+            height: 450px;
+        }
+
+        .mall-con {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 450px;
+            height: 450px;
+            border: 1px solid #ccc;
+        }
+
+        .big-con {
+            display: none;
+            position: absolute;
+            left: 452px;
+            top: 0;
+            width: 540px;
+            height: 540px;
+            overflow: hidden;
+        }
+
+        .big-con img {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .mask-pointer {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 303px;
+            height: 303px;
+            background: url(img/2-2.png);
+        }
+    </style>
+</head>
+
+<body>
+<div class="con">
+    <div class="mall-con">
+        <img src="img/1.jpg" alt="min">
+        <div class="mask-pointer"></div>
+    </div>
+    <div class="big-con">
+        <img src="img/2.jpg" alt="big">
+    </div>
+</div>
+
+<script>
+    var conDiv = document.getElementsByClassName("con")[0];
+    var minImgDiv = document.getElementsByClassName("mall-con")[0];
+    var msPointer = document.getElementsByClassName("mask-pointer")[0];
+    var bigImgDiv = document.getElementsByClassName("big-con")[0];
+    var bigImg = document.querySelector(".big-con img");
+
+    minImgDiv.onmouseover = function () {
+        //鼠标移入显示大图和放大镜
+        msPointer.style.display = "block";
+        bigImgDiv.style.display = "block";
+        //鼠标移出进行隐藏
+        minImgDiv.onmouseout = function () {
+            msPointer.style.display = "none";
+            bigImgDiv.style.display = "none";
+        }
+        //鼠标移动事件
+        minImgDiv.onmousemove = function (event) {
+            //offsetLeft:距离父级的左边距
+            //offsetTop:距离父级的上边距
+            //offsetWidth: 元素内容+内边距的宽度（不包括边框）
+            //clientWidth: 元素包括边框内边距的宽度
+            console.log("1");
+            //鼠标的焦点坐标 二分之一的宽度的目的是鼠标在中间
+            //最短距离是父级外边距+1/2放大镜的宽度
+            //当鼠标在放大镜内部时大于1/2宽度时 就让放大镜右移
+            var x = event.clientX - conDiv.offsetLeft - msPointer.offsetWidth / 2;
+            var y = event.clientY - conDiv.offsetTop - msPointer.offsetHeight / 2;
+
+          /*  console.log(minImgDiv.offsetLeft);//0
+            console.log(minImgDiv.offsetTop);//0
+            console.log(conDiv.offsetTop);//50
+            console.log(conDiv.offsetLeft);//108
+            console.log("x" + event.clientX + "y" + event.clientY);*/
+
+            //最大距离宽度 当放大镜到最左端时 即最大移动距离
+            var maxX = minImgDiv.clientWidth - msPointer.offsetWidth;
+            var maxY = minImgDiv.clientHeight - msPointer.offsetHeight;
+//            console.log("mx"+maxX+"my"+maxY);
+            //对距离进行判断
+            // 边界判断
+            if (x <= 0) {
+                x = 0;
+            } else if (x >= maxX) {
+                x = maxX;
+            }
+            if (y <= 0) {
+                y = 0;
+            } else if (y >= maxY) {
+                y = maxY;
+            }
+//            console.log("x"+x+"y"+y);
+            //放大镜的位置
+            msPointer.style.left = x + "px";
+            msPointer.style.top = y + "px";
+
+            //变换比例
+            var ratioX = x / maxX;
+            var ratioY = y / maxY;
+
+            //大图变化
+            //此处为差为负值移动方向相反
+            bigImg.style.left = ratioX * (bigImgDiv.clientWidth - bigImg.offsetWidth) + "px";
+            bigImg.style.top = ratioY * (bigImgDiv.clientHeight - bigImg.offsetHeight) + "px";
+
+
+        }
+    }
+
+
+</script>
+</body>
+
+</html>
