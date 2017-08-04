@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>侧边浮动导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .con {
+            margin: 0 auto;
+            width: 1000px;
+        }
+
+        .con div {
+            width: 100%;
+            height: 800px;
+            border: 1px solid rebeccapurple;
+        }
+
+        nav {
+            position: fixed;
+            right: 0;
+            top: 20%;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        nav li a {
+            display: block;
+            width: 50px;
+            height: 60px;
+            line-height: 60px;
+            border: 1px solid #ccc;
+        }
+
+        a {
+            text-decoration: none;
+            color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">
+        <nav>
+            <ul>
+                <li><a href="#nav-part1">导航1</a></li>
+                <li><a href="#nav-part2">导航2</a></li>
+                <li><a href="#nav-part3">导航3</a></li>
+                <li><a href="#nav-part4">导航4</a></li>
+                <li><a href="#nav-part5">导航5</a></li>
+                <li><a href="#nav-part6">导航6</a></li>
+            </ul>
+        </nav>
+        <div id="nav-part1" class="nav-part1">
+            <h1>导航部分1</h1>
+        </div>
+        <div id="nav-part2" class="nav-part2">
+            <h1>导航部分2</h1>
+        </div>
+        <div id="nav-part3" class="nav-part3">
+            <h1>导航部分3</h1>
+        </div>
+        <div id="nav-part4" class="nav-part4">
+            <h1>导航部分4</h1>
+        </div>
+        <div id="nav-part5" class="nav-part5">
+            <h1>导航部分5</h1>
+        </div>
+        <div id="nav-part6" class="nav-part6">
+            <h1>导航部分6</h1>
+        </div>
+    </div>
+</body>
+<script>
+    var oNav = document.querySelectorAll(".con nav li a");
+    //定义滚轮开关 消除滚轮事件叠加
+    var ticking = false;
+    //定义记录滚动变量
+    var last_position = 0;
+
+    //颜色重置函数
+    function resetBgColor(eleArr) {
+        for (var i = 0; i < eleArr.length; i++) {
+            eleArr[i].style.backgroundColor = "#fff";
+            eleArr[i].style.color = "hotpink";
+        }
+    }
+    //定义设置颜色函数
+    function setBgColor(ele, value) {
+        ele.style.backgroundColor = value;
+        ele.style.color = "#fff";
+    }
+    //定义点击事件
+    function anchorPoint(eleArr) {
+        for (var i = 0; i < eleArr.length; i++) {
+            //将变量存储在段落间
+            eleArr[i].i = i;
+            eleArr[i].onclick = function () {
+                window.scrollY = this.i * 700;
+            }
+        }
+    }
+    anchorPoint(oNav);
+    //添加滚轮事件
+    window.addEventListener("scroll", function () {
+        last_position = window.scrollY;
+        if (!ticking) {
+            // 利用动画API进行优化
+            window.requestAnimationFrame(
+                function () {
+                    if (last_position >= 0 && last_position < 700) {
+                        resetBgColor(oNav);
+                        setBgColor(oNav[0], "red");
+                    } else if (last_position >= 700 && last_position < 1400) {
+                        resetBgColor(oNav);
+                        setBgColor(oNav[1], "red");
+                    } else if (last_position >= 1400 && last_position < 2100) {
+                        resetBgColor(oNav);
+                        setBgColor(oNav[2], "red");
+                    } else if (last_position >= 2100 && last_position < 2800) {
+                        resetBgColor(oNav);
+                        setBgColor(oNav[3], "red");
+                    } else if (last_position >= 2800 && last_position < 3900) {
+                        resetBgColor(oNav);
+                        setBgColor(oNav[4], "red");
+                    } else if (last_position >= 3900) {
+                        resetBgColor(oNav);
+                        setBgColor(oNav[5], "red");
+                    }
+                    ticking = false;
+                }
+            );
+        }
+        ticking = true;
+    });
+</script>
+
+</html>

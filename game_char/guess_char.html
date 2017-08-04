@@ -100,11 +100,12 @@
         var startBtn = document.querySelector(".start-btn");
         //计数
         var count = 0;
+        //定义开关按钮
+        var switch_btn = true;
         //定义颜色和汉字数组
         var arrChar = ["黑", "红", "绿", "蓝", "黄"];
         var arrColor = ["black", "red", "green", "blue", "yellow"];
-
-        //产生5个不重复的随机位置0~5的数组
+        //产生5个不重复的随机位置0~4的数组
         function intArrayRandom(min, max) {
             var arr = [];
             // 下标从0开始 长度为5就不需要执行
@@ -118,10 +119,13 @@
         }
         //随机颜色函数
         function randomColor(eleArr, ele, arr) {
+            //产生5个随机位置
             var arrR = intArrayRandom(0, 4);
             for (var i = 0; i < arrR.length; i++) {
+                //为后面元素数组设置随机颜色
                 eleArr[i].style.color = arr[arrR[i]];
             }
+            //给元素随机设置颜色
             ele.style.color = arr[Math.round(Math.random() * 4)]
             console.log("1");
         }
@@ -129,22 +133,23 @@
         function randomFont(eleArr, ele, arr) {
             var arrR = intArrayRandom(0, 4);
             for (var i = 0; i < arrR.length; i++) {
+                //给元素数组设置随机字体
                 eleArr[i].innerHTML = arr[arrR[i]];
             }
+            //给元素设置随机字体
             ele.innerHTML = arr[Math.round(Math.random() * 4)];
             console.log("2");
         }
         // 开始函数
         function gameStart(arguments) {
-            //定义开关按钮
-            var switch_btn = true;
+            //定时器
             var timer = null;
             //定义时间
             var second = 60;
-            if (switch_btn) {
-                //点击事件
-                for (var i = 0; i < botmSpan.length; i++) {
-                    botmSpan[i].onclick = function () {
+            //点击事件
+            for (var i = 0; i < botmSpan.length; i++) {
+                botmSpan[i].onclick = function () {
+                    if (switch_btn) {
                         var bigColor = midDiv.style.color;
                         // 查找数组对应相等则选对
                         if (arrChar.indexOf(this.innerHTML) == arrColor.indexOf(bigColor)) {
@@ -155,21 +160,23 @@
                             randomFont(botmSpan, midDiv, arrChar);
                         } else {
                             // alert("你选错了");
-                            second-=5;
+                            second -= 5;
                             randomColor(botmSpan, midDiv, arrColor);
                             randomFont(botmSpan, midDiv, arrChar);
                         }
                     }
                 }
             }
+
             timer = setInterval(function () {
                 second--;
                 timeDiv.innerHTML = second;
-                if (second == 0) {
+                if (second <= 0) {
                     switch_btn = false;
-                     timeDiv.innerHTML = "60";
+                    timeDiv.innerHTML = "60";
                     clearInterval(timer);
                     alert("游戏结束！你的分数：" + resultDiv.innerHTML + "分");
+                    resultDiv.innerHTML = "0";
                 }
             }, 1000);
         }
