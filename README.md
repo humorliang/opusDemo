@@ -12,3 +12,5 @@
 * [轮播图](sliderPic/slider.html)
 * [放大镜效果](jdBigPic/bigImage.html)
 * [商城侧边滚动导航](scrollNav/scrollNav.html)
+* [类似点赞效果](click/clickHeart.html)
+* [链家首页及二手房页面](lianjia/index.html) 使用js对象对数据进行模拟

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>类似点赞效果</title>
+    <style>
+        div {
+            cursor: pointer;
+        }
+
+        .select {
+            color: red;
+        }
+
+        .wrap {
+            width: 20%;
+            margin: 0 auto;
+        }
+
+        .p div {
+            display: inline-block;
+            width: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="p">
+            <div>
+                已选款式 <span class="res1">0</span>
+            </div>
+            <div>
+                已选颜色 <span class="res2">0</span>
+            </div>
+        </div>
+        <div class="label"><label><input type="checkbox" data-count="1">款式1</label></div>
+        <div class="label"><label><input type="checkbox">款式2</label></div>
+        <div class="label"><label><input type="checkbox">款式3</label></div>
+        <div class="label"><label><input type="checkbox">款式4</label></div>
+        <div class="label"><label><input type="checkbox">款式5</label></div>
+        <div class="div-wrap">
+            <div>颜色1</div>
+            <div>颜色2</div>
+            <div>颜色3</div>
+            <div>颜色4</div>
+            <div>颜色5</div>
+        </div>
+    </div>
+</body>
+<script>
+    //款式函数
+    function styleSelect() {
+        var oInp = document.getElementsByTagName('input');
+        var oRes = document.getElementsByClassName("res1")[0];
+        var count = [];
+
+        function judegCount() {
+            for (var i = 0; i < oInp.length; i++) {
+                if (oInp[i].checked) {
+                    if (count.indexOf(i) == -1) {
+                        count.push(i);
+                    }
+                } else {
+                    if (count.indexOf(i) != -1) {
+                        if (count.length > 0) {
+                            count.splice(count.indexOf(i), 1);
+                        }
+                    }
+                }
+            }
+            console.log(count);
+        }
+        for (var j = 0; j < oInp.length; j++) {
+            oInp[j].onclick = function () {
+                judegCount();
+                // console.log(count.length);
+                oRes.innerHTML = count.length;
+
+            }
+        }
+    }
+    //颜色函数
+    function colorSelect(params) {
+        var oDiv = document.querySelectorAll(".div-wrap div");
+        var oRes2 = document.getElementsByClassName("res2")[0];
+
+        var arr = [];
+
+        function judegArr() {
+            for (var i = 0; i < oDiv.length; i++) {
+                if (oDiv[i].className == "select") {
+                    if (arr.indexOf(i) == -1) {
+                        arr.push(i);
+                    }
+                } else {
+                    if (arr.indexOf(i) != -1) {
+                        arr.splice(arr.indexOf(i), 1);
+                    }
+                }
+            }
+            console.log(arr.length);
+        }
+        for (var j = 0; j < oDiv.length; j++) {
+            oDiv[j].j = j;
+            oDiv[j].onclick = function () {
+                if (oDiv[this.j].className == "select") {
+                    oDiv[this.j].className = "";
+                } else {
+                    oDiv[this.j].className = "select";
+                }
+                judegArr();
+                oRes2.innerHTML = arr.length;
+            }
+        }
+    }
+    styleSelect();
+    colorSelect();
+</script>
+
+</html>
