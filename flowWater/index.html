@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流</title>
+    <style>
+        .wrap {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .list ul {
+            font-size: 0;
+            list-style: none;
+        }
+
+        .list li {
+            float: left;
+            list-style: none;
+            vertical-align: top;
+            width: 230px;
+            margin: 0 10px;
+        }
+
+        .list li div {
+            width: 100%;
+            height: 200px;
+            background: #eee;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="list">
+            <li>
+
+            </li>
+            <li>
+
+            </li>
+            <li>
+
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        //获取元素
+        var list = document.querySelector('.list');
+        var liArr = document.querySelectorAll('.list li');
+        //定义变量，判断三个li标签的最小高度
+        var heightArr = [0, 0, 0];
+        var minHeight = 0;
+
+        //创建item
+        function createItem() {
+            //把要创建的新元素的个数赋给一个变量
+            var itemNum = 10;
+            //用循环创建
+            for (var i = 0; i < itemNum; i++) {
+                var item = document.createElement('div');
+                var newHeight = ranNum(100, 300);
+                item.style.height = newHeight + "px";
+                item.style.background = "rgb(" + ranNum(0, 255) + "," + ranNum(100, 255) + "," + ranNum(50, 255) + ")";
+                //            item.style.background = "red";
+                item.innerHTML = i;
+                item.style.lineHeight = newHeight + "px";
+                //用循环找出最小高度的li标签，将新创建的div插到其中
+                //取最小高度
+                minHeight = Math.min(heightArr[0], heightArr[1], heightArr[2]);
+                var minIndex = heightArr.indexOf(minHeight);
+                liArr[minIndex].append(item);
+                heightArr.splice(minIndex, 1, newHeight + minHeight);
+            }
+        }
+
+        //随机函数，随机生成item的高度和颜色
+        function ranNum(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+
+        createItem();
+    </script>
+</body>
+
+</html>
