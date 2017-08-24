@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>接苹果</title>
+    <style>
+        .wrap {
+            position: relative;
+            margin: 0 auto;
+            width: 800px;
+            height: 550px;
+            border: 1px solid #ccc;
+        }
+
+        .plat {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 20px;
+            background: #692;
+            /* background: url(timg.png) no-repeat 0 0;
+            background-size: 100%; */
+        }
+
+        .show {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 10px;
+            background: lavenderblush;
+            color: lightcoral;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <div class="show">你吃了多少个包子：<span>0</span></div> -->
+        <div class="plat"></div>
+    </div>
+
+    <script>
+        //获取元素
+        var oWrap = document.getElementsByClassName('wrap')[0];
+        var oPlat = document.getElementsByClassName('plat')[0];
+        var oShow = document.querySelector(".show span");
+        var count = 0;
+        //生成随机果子div
+        function randDiv() {
+            var newSpan = document.createElement("div");
+            newSpan.className = "item";
+            newSpan.style.position = "absolute";
+            // newSpan.style.background = "url(b.jpg) no-repeat 0 0";
+            newSpan.style.background = "red";
+            // newSpan.style.backgroundSize = "100%";
+            newSpan.style.width = 50 + "px";
+            newSpan.style.height = 50 + "px";
+            newSpan.style.borderRadius = "50%";
+            newSpan.style.left = randNum(50, 750) + "px";
+            newSpan.style.top = "0px";
+            return newSpan;
+        }
+        //产生随机数
+        function randNum(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+        //碰撞检测
+        function hitFn(hitObj, boxObj) {
+            var left1 = hitObj.offsetLeft + hitObj.clientWidth;
+            var top1 = hitObj.offsetTop + hitObj.clientHeight;
+            var left2 = boxObj.offsetLeft + boxObj.clientWidth;
+            var top2 = boxObj.offsetTop + boxObj.clientHeight;
+            // console.log(left1 + "," + top1 + "," + left2 + "," + top2);
+            if ((boxObj.offsetLeft <= left1 && boxObj.offsetTop <= top1) && (left2 >= hitObj.offsetLeft && top2 >=
+                    hitObj.offsetTop)) {
+                // hitObj.style.top = "0px";
+                return true;
+                // console.log("f11");
+            }
+        }
+
+        //开始运行函数
+        function runStart() {
+            //键盘监听事件
+            document.onkeydown = function () {
+                var e = event || window.event;
+                if (e.keyCode == 37) {
+                    // 边界判断
+                    if (oPlat.offsetLeft >= 5) {
+                        oPlat.style.left = oPlat.offsetLeft - 5 + "px";
+                    } else {
+                        oPlat.style.left = "0px";
+                    }
+                } else if (e.keyCode == 39) {
+                    //边界判断
+                    if (oPlat.offsetLeft <= (oWrap.clientWidth - oPlat.clientWidth - 5)) {
+                        oPlat.style.left = oPlat.offsetLeft + 5 + "px";
+                    } else {
+                        oPlat.style.left = (oWrap.clientWidth - oPlat.clientWidth) + "px";
+                    }
+                }
+                console.log(1);
+            }
+            for (var j = 0; j < 10; j++) {
+                //创建果子并添加
+                oWrap.appendChild(randDiv());
+            }
+            var timer = setInterval(function () {
+                var oWrapDiv = document.querySelectorAll(".wrap .item");
+                //遍历所有的果子并增加left值
+                for (var i = 0; i < oWrapDiv.length; i++) {
+                    oWrapDiv[i].style.top = oWrapDiv[i].offsetTop + randNum(0, 60) + "px";
+                }
+                for (var j = 0; j < oWrapDiv.length; j++) {
+                    if (oWrapDiv[j].offsetTop >= 500 || hitFn(oWrapDiv[j], oPlat)) {
+                        oWrapDiv[j].style.top = "0px";
+                        // console.log(1);
+                        // count++;
+                        // oShow.innerHTML = count;
+                    }
+                }
+            }, 500);
+
+        }
+        runStart();
+    </script>
+</body>
+
+</html>

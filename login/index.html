@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <style>
+        .wrap {
+            padding-top: 60px;
+            margin: 100px auto;
+            width: 400px;
+            height: 250px;
+            background: rgba(183, 255, 203, 0.34);
+            border-radius: 5px;
+        }
+
+        input {
+            outline: none;
+            height: 20px;
+            border: 1px solid lightblue;
+            border-radius: 2px;
+        }
+
+        .userName {
+            margin: 0 auto;
+            height: 20px;
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .password {
+            margin: 0 auto;
+            height: 20px;
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .submit {
+            margin: 0 auto;
+            height: 20px;
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            color: #999;
+        }
+
+        .submit button {
+            width: 115px;
+            height: 40px;
+            border: none;
+            background: rgba(204, 204, 204, 0.33);
+            border-radius: 8px;
+            color: plum;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .remand {
+            margin-left: 50px;
+            width: 115px;
+            height: 20px;
+        }
+
+        .remand input {
+            vertical-align: -5px;
+        }
+        .friend{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="friend">温馨提示：登陆框采用cookie注册，localStorge进行记住密码模拟!</div>
+<div class="wrap">
+    <div class="userName">用户名：<input type="text"></div>
+    <div class="password">密&nbsp;&nbsp;&nbsp;码：<input type="password"></div>
+    <div class="remand"><label for="remand"><input type="checkbox" id="remand">记住密码</label></div>
+    <div class="submit">
+        <button class="reg">注册</button>
+        <button class="login">登陆</button>
+    </div>
+    <script>
+        //获取元素
+        var userNaInp = document.querySelector(".userName input");
+        var passWInp = document.querySelector('.password input');
+        var oReg = document.getElementsByClassName('reg')[0];
+        var oLogin = document.getElementsByClassName('login')[0];
+        var lsObj = window.localStorage;
+
+
+        //密码记录框
+        var oRemand = document.getElementById("remand");
+
+        //记住密码判断函数
+        function remandPassWord(user) {
+            if (lsObj["remand"] == "true") {
+                userNaInp.value = JSON.parse(lsObj[user]).user;
+                passWInp.value = JSON.parse(lsObj[user]).password;
+                oRemand.checked = "true";
+            }
+        }
+        //刷新判断
+        remandPassWord("user1");
+
+        //点击事件
+        oReg.onclick = function () {
+            var uValue = userNaInp.value;
+            var pValue = passWInp.value;
+            var reg = /^\s+$/g;
+            if (!reg.test(uValue) || !reg.test(pValue)) {
+                setCookie(uValue, pValue);
+                alert("注册成功");
+                userNaInp.value = "";
+                passWInp.value = "";
+            } else {
+                alert("请输入信息");
+            }
+        }
+        //登陆点击事件
+        oLogin.onclick = function () {
+            var uValue = userNaInp.value;
+            var pValue = passWInp.value;
+            var reg = /^\s+$/g;
+            //定义信息变量
+            var InfoObj = {
+                user: uValue,
+                password: pValue
+            };
+            //判断是否为空
+            if (!reg.test(uValue) || !reg.test(pValue)) {
+                getCookie(uValue, pValue);
+                //如果记住密码设置localstorge
+                if (oRemand.checked) {
+                    lsObj.setItem(uValue, pValue);
+                    lsObj.setItem("remand", "true");
+                    lsObj.setItem("user1",JSON.stringify(InfoObj));
+                } else {
+                    lsObj.clear();
+                }
+            } else {
+                alert("请输入信息");
+            }
+        }
+
+
+        //cookie设置函数
+        function setCookie(name, value) {
+            var d = new Date();
+            d.setHours(d.getHours() + 10000); //1小时候过期
+            document.cookie = name + "=" + value+";expires="+d.toGMTString();
+        }
+
+        //cookie读取函数
+        function getCookie(name, value) {
+            var cookie = document.cookie;
+            var ckArr = cookie.split("; ");
+            for (var i = 0; i < ckArr.length; i++) {
+                //分割
+                ckArr[i] = ckArr[i].split("=");
+                if (ckArr[i][0] != name) {
+                    alert("用户名错误");
+                } else if (ckArr[i][1] != value) {
+                    alert("密码错误");
+                } else {
+                    return alert("登陆成功！");
+                }
+            }
+        }
+    </script>
+
+</div>
+</body>
+
+</html>
